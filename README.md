@@ -2,7 +2,7 @@
 This is a learning project
 
 
-
+## How it was initialized
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
