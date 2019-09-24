@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.card-youtube__text-title{
+  text-overflow: clip;
+  word-wrap: break-word;
+  overflow: hidden;
+  height: 3.9em;
+}
+
+.card-youtube__text-description{
+  text-overflow: clip;
+  word-wrap: break-word;
+  overflow: hidden;
+  height: 5.6em;
+  line-height: 1.4em;
+}
