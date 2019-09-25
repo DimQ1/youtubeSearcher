@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+.main-layout{
+  height: 100vh;
+}
+
 .card-youtube__text-title{
   text-overflow: clip;
   word-wrap: break-word;

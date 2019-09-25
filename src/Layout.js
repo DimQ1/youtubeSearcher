@@ -5,7 +5,7 @@ import YoutubeSearchContainer from './YoutubeSearchContaner';
 class Layout extends React.Component {
     render() {
         return (
-            <div className='bg-dark'>
+            <div className='main-layout bg-dark'>
                 <Container>
                     <YoutubeSearchContainer />
                 </Container>
