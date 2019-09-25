@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, InputGroup, FormControl, Row, Col } from 'react-bootstrap';
+import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -14,6 +14,7 @@ class SearchInput extends React.Component {
     }
 
     render() {
+        const query = this.props.query;
         return (
             <form onSubmit={this.handleSubmit}>
                 <InputGroup className="mt-3 mb-3">
