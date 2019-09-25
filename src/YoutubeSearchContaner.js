@@ -3,6 +3,7 @@ import SearchInput from './SearchInput';
 import CardContainerResult from './CardContainerResult';
 import Spiner from './Spinner';
 import YoutubeAPI from './YoutubeAPI'
+import { Row, Col } from 'react-bootstrap';
 
 
 class YoutubeSearchContainer extends React.Component {
@@ -51,7 +52,11 @@ class YoutubeSearchContainer extends React.Component {
         const foundItems = this.state.searchResalt;
         return (
             <div onScroll={this.handleScroll}>
-                <SearchInput onSearch={this.handleSubmitSearch} onChangeInput={this.handleQuery} query={this.state.query} />
+                <Row>
+                    <Col sm={12}>
+                        <SearchInput onSearch={this.handleSubmitSearch} onChangeInput={this.handleQuery} query={this.state.query} />
+                    </Col>
+                </Row>
                 <CardContainerResult items={foundItems} />
                 <Spiner isLoading={isLoading} />
             </div>
