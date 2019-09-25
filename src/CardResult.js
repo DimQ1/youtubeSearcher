@@ -11,10 +11,10 @@ class CardResult extends React.Component {
 
     render() {
         const { title, description, channelTitle, publishedAt, urlImg, urlVideo, views, likes, disLikes } = this.props;
-        const hoverClassName = this.state.hovering ? 'card_hover' : '';
+        const hoverClassName = this.state.hovering ? 'card_hover mb-3 mt-3' : 'mb-3 mt-3';
 
         return (
-            <Card className={`${hoverClassName} mb-3 mt-3`} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
+            <Card className={hoverClassName} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
                 <Card.Img variant="top" src={urlImg} />
                 <Card.Body>
                     <a className="stretched-link" href={urlVideo}></a>
