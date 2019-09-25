@@ -16,6 +16,10 @@ code {
   min-height: 100vh;
 }
 
+.card_hover{
+  box-shadow: 0 0 10px #ffffff
+}
+
 .card-youtube__text-title{
   text-overflow: clip;
   word-wrap: break-word;

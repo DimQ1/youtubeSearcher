@@ -4,18 +4,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faCalendarAlt, faUsers, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 
 
-class CardDisplaySearchResult extends React.Component {
+class CardResult extends React.Component {
+    state = { hovering: false }
+    mouseOver = () => this.setState({ hovering: true })
+    mouseOut = () => this.setState({ hovering: false })
+
     render() {
-        const { title, description, channelTitle, publishedAt } = this.props.youtubeItem.snippet;
-        const views = 19999;
-        const likes = 1200;
-        const disLikes = 200;
-        const urlImg = this.props.youtubeItem.snippet.thumbnails.medium.url;
+        const { title, description, channelTitle, publishedAt, urlImg, urlVideo, views, likes, disLikes } = this.props;
+        const hoverClassName = this.state.hovering ? 'card_hover' : '';
 
         return (
-            <Card className="mb-3 mt-3">
+            <Card className={`${hoverClassName} mb-3 mt-3`} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
                 <Card.Img variant="top" src={urlImg} />
                 <Card.Body>
+                    <a className="stretched-link" href={urlVideo}></a>
                     <Card.Title className='card-youtube__text-title text-center'>{title}</Card.Title>
                     <Card.Text className='card-youtube__text-description text-justify'>
                         {description}
@@ -53,4 +55,4 @@ class CardDisplaySearchResult extends React.Component {
     }
 }
 
-export default CardDisplaySearchResult;
+export default CardResult;
