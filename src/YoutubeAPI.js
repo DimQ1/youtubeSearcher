@@ -2,9 +2,9 @@ class youtubeAPI {
     constructor(key, onLoadData) {
         this._part = 'snippet';
         this._type = 'video';
-        //this._key = key ? key : 'AIzaSyBMe0YAZiT9xnr2Zl7N-cCT3b15S0OLNkE';
+        this._key = key ? key : 'AIzaSyBMe0YAZiT9xnr2Zl7N-cCT3b15S0OLNkE';
         //this._key = key ? key : "AIzaSyAwYHaDBzo1_I1ZuCnhBxjJN_tL-EjQuZ4";
-        this._key = key ? key : 'AIzaSyCunpeDH93FQRFR33zHRnsfuATLjQSSzks';
+        //this._key = key ? key : 'AIzaSyCunpeDH93FQRFR33zHRnsfuATLjQSSzks';
         this._maxResults = 6;
 
         this._url = new URL('https://www.googleapis.com/youtube/v3/search');

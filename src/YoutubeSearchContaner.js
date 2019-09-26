@@ -13,14 +13,6 @@ class YoutubeSearchContainer extends React.Component {
         this.Dataset = new YoutubeAPI('', this.handleLoaded);
     }
 
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
-    };
-
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    };
-
     handleLoaded = (data, error) => {
         const filteredItems = data.items.filter(i => !this.state.searchResalt.some(exItem => exItem.id.videoId === i.id.videoId));
         const searchResalt = this.state.isNext ? this.state.searchResalt.concat(filteredItems) : data.items;
@@ -33,16 +25,13 @@ class YoutubeSearchContainer extends React.Component {
     }
 
     handleSubmitSearch = (query) => {
-        this.setState({ query });
-        this.setState({ isLoading: true });
-        this.setState({ isNext: false });
+        this.setState({ query, isLoading: true, isNext: false });
         this.Dataset.getData(query);
     }
 
-    handleScroll = (event) => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            this.setState({ isLoading: true });
-            this.setState({ isNext: true });
+    handleScrollEnd = () => {
+        if (!this.state.isLoading) {
+            this.setState({ isNext: true, isLoading: true });
             this.Dataset.getData(this.state.query, this.state.nextPageToken);
         }
     }
@@ -51,7 +40,6 @@ class YoutubeSearchContainer extends React.Component {
         const isLoading = this.state.isLoading;
         const foundItems = this.state.searchResalt;
         return (
-
             <div>
                 <Row>
                     <Col sm={12}>
@@ -59,7 +47,7 @@ class YoutubeSearchContainer extends React.Component {
                     </Col>
                 </Row>
                 <CardContainerResult items={foundItems} />
-                <Spiner isLoading={isLoading} />
+                <Spiner isLoading={isLoading} onScrollEnd={this.handleScrollEnd} />
             </div>
         );
     }
