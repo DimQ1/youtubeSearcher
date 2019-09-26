@@ -3,7 +3,7 @@ import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-class SearchInput extends React.Component {
+class Search extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.props.onSubmit(event.target.elements[0].value);
@@ -14,7 +14,7 @@ class SearchInput extends React.Component {
     }
 
     render() {
-        const query = this.props.query;
+        const query = this.props.query ? this.props.query : '';
         return (
             <form onSubmit={this.handleSubmit}>
                 <InputGroup className="mt-3 mb-3">
@@ -24,7 +24,7 @@ class SearchInput extends React.Component {
                         aria-describedby="basic-addon2"
                     />
                     <InputGroup.Append>
-                        <Button variant="outline-secondary" type="submit"><FontAwesomeIcon icon={faSearch} /></Button>
+                        <Button variant="outline-secondary" type="submit"><FontAwesomeIcon icon={faSearch} ></FontAwesomeIcon></Button>
                     </InputGroup.Append>
                 </InputGroup>
             </form>
@@ -32,8 +32,4 @@ class SearchInput extends React.Component {
     }
 }
 
-SearchInput.defaultProps = {
-    query:''
-};
-
-export default SearchInput;
+export default Search;
