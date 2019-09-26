@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchInput from './SearchInput';
+import Search from './Search';
 import CardContainerResult from './CardContainerResult';
 import Spiner from './Spinner';
 import YoutubeAPI from './YoutubeAPI'
@@ -51,10 +51,11 @@ class YoutubeSearchContainer extends React.Component {
         const isLoading = this.state.isLoading;
         const foundItems = this.state.searchResalt;
         return (
-            <div onScroll={this.handleScroll}>
+
+            <div>
                 <Row>
                     <Col sm={12}>
-                        <SearchInput onSearch={this.handleSubmitSearch} onChangeInput={this.handleQuery} query={this.state.query} />
+                        <Search onSubmit={this.handleSubmitSearch} onChange={this.handleQuery} query={this.state.query} />
                     </Col>
                 </Row>
                 <CardContainerResult items={foundItems} />

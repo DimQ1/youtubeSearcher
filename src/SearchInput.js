@@ -6,11 +6,11 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 class SearchInput extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.onSearch(event.target.elements[0].value);
+        this.props.onSubmit(event.target.elements[0].value);
     }
 
     handleChange = (event) => {
-        this.props.onChangeInput(event.target.value);
+        this.props.onChange(event.target.value);
     }
 
     render() {
