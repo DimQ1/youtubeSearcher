@@ -17,7 +17,7 @@ class CardResult extends React.Component {
             <Card className={hoverClassName} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
                 <Card.Img variant="top" src={urlImg} />
                 <Card.Body>
-                    <a className="stretched-link" href={urlVideo}> </a>
+                    <a className="stretched-link" target='_blank' href={urlVideo}> </a>
                     <Card.Title className='card-youtube__text-title text-center'>{title}</Card.Title>
                     <Card.Text className='card-youtube__text-description text-justify'>
                         {description}
