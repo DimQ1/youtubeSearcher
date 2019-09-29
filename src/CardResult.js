@@ -9,7 +9,7 @@ class CardResult extends React.Component {
         const { title, description, channelTitle, publishedAt, urlImg, urlVideo, views, likes, disLikes } = this.props;
 
         return (
-            <Card className="card-youtube mb-3 mt-3" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
+            <Card className="card-youtube mb-3 mt-3">
                 <Card.Img variant="top" src={urlImg} />
                 <Card.Body>
                     <a className="stretched-link" href={urlVideo}> </a>
