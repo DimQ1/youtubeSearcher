@@ -1,8 +1,9 @@
 import React from 'react'
-import SearchInput from './SearchInput';
+import Search from './Search';
 import CardContainerResult from './CardContainerResult';
 import Spiner from './Spinner';
 import YoutubeAPI from './YoutubeAPI'
+import { Row, Col } from 'react-bootstrap';
 
 
 class YoutubeSearchContainer extends React.Component {
@@ -11,14 +12,6 @@ class YoutubeSearchContainer extends React.Component {
         this.state = { searchResalt: [], query: '', isLoading: false, isNext: false }
         this.Dataset = new YoutubeAPI('', this.handleLoaded);
     }
-
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
-    };
-
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    };
 
     handleLoaded = (data, error) => {
         const filteredItems = data.items.filter(i => !this.state.searchResalt.some(exItem => exItem.id.videoId === i.id.videoId));
@@ -32,16 +25,13 @@ class YoutubeSearchContainer extends React.Component {
     }
 
     handleSubmitSearch = (query) => {
-        this.setState({ query });
-        this.setState({ isLoading: true });
-        this.setState({ isNext: false });
+        this.setState({ query, isLoading: true, isNext: false });
         this.Dataset.getData(query);
     }
 
-    handleScroll = (event) => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            this.setState({ isLoading: true });
-            this.setState({ isNext: true });
+    handleScrollEnd = () => {
+        if (!this.state.isLoading) {
+            this.setState({ isNext: true, isLoading: true });
             this.Dataset.getData(this.state.query, this.state.nextPageToken);
         }
     }
@@ -50,10 +40,14 @@ class YoutubeSearchContainer extends React.Component {
         const isLoading = this.state.isLoading;
         const foundItems = this.state.searchResalt;
         return (
-            <div onScroll={this.handleScroll}>
-                <SearchInput onSearch={this.handleSubmitSearch} onChangeInput={this.handleQuery} query={this.state.query} />
+            <div>
+                <Row>
+                    <Col sm={12}>
+                        <Search onSubmit={this.handleSubmitSearch} onChange={this.handleQuery} query={this.state.query} />
+                    </Col>
+                </Row>
                 <CardContainerResult items={foundItems} />
-                <Spiner isLoading={isLoading} />
+                <Spiner isLoading={isLoading} onScrollEnd={this.handleScrollEnd} />
             </div>
         );
     }
