@@ -2,22 +2,40 @@ import React from 'react'
 import Search from './Search';
 import CardContainerResult from './CardContainerResult';
 import Spiner from './Spinner';
-import YoutubeAPI from './YoutubeAPI'
+import YoutubeAPI from './YoutubeAPI';
 import { Row, Col } from 'react-bootstrap';
-
+import { async } from 'q';
 
 class YoutubeSearchContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = { searchResalt: [], query: '', isLoading: false, isNext: false }
-        this.Dataset = new YoutubeAPI('', this.handleLoaded);
+        this.Dataset = new YoutubeAPI();
     }
 
-    handleLoaded = (data, error) => {
-        const filteredItems = data.items.filter(i => !this.state.searchResalt.some(exItem => exItem.id.videoId === i.id.videoId));
-        const searchResalt = this.state.isNext ? this.state.searchResalt.concat(filteredItems) : data.items;
+    getVideoDetails = async (items) => {
+        const videoIds = items.map(item => item.id.videoId).join(',');
+        const videodetails = await this.Dataset.getVideoDetail(videoIds);
+        this.setState((prev) => {
+            const searchResalt = prev.searchResalt;
+            videodetails.items.forEach(element => {
+                const updatedItem = searchResalt.find(exItem => exItem.id.videoId === element.id)
+                updatedItem['views'] = element.statistics.viewCount;
+            });
 
-        this.setState({ isLoading: false, searchResalt, nextPageToken: data.nextPageToken });
+            return { ...prev, searchResalt }
+        });
+    }
+
+    handleLoaded = async (data, error) => {
+        const loadedData = await data;
+        this.setState((prev) => {
+            const filteredItems = loadedData.items.filter(i => !this.state.searchResalt.some(exItem => exItem.id.videoId === i.id.videoId));
+            const searchResalt = this.state.isNext ? this.state.searchResalt.concat(filteredItems) : filteredItems;
+            this.getVideoDetails(filteredItems);
+            return { ...prev, isLoading: false, searchResalt, nextPageToken: data.nextPageToken }
+        });
+
     }
 
     handleQuery = (query) => {
@@ -26,13 +44,13 @@ class YoutubeSearchContainer extends React.Component {
 
     handleSubmitSearch = (query) => {
         this.setState({ query, isLoading: true, isNext: false });
-        this.Dataset.getData(query);
+        this.handleLoaded(this.Dataset.getSearchData(query));
     }
 
     handleScrollEnd = () => {
         if (!this.state.isLoading) {
             this.setState({ isNext: true, isLoading: true });
-            this.Dataset.getData(this.state.query, this.state.nextPageToken);
+            this.handleLoaded(this.Dataset.getSearchData(this.state.query, this.state.nextPageToken));
         }
     }
 

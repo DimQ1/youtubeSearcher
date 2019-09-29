@@ -2,10 +2,11 @@ import React from 'react'
 import YoutubeUtilsAPI from './YoutubeUtilsAPI';
 
 function getAllNededProps(item) {
-    const { title, description, channelTitle, publishedAt } = item.snippet;
+    const { title, description, channelTitle, publishedAt, views } = item.snippet;
+    const videoId = item.id.videoId;
     const urlImg = item.snippet.thumbnails.medium.url;
-    const urlVideo = YoutubeUtilsAPI.getVideoUrlByVideoId(item.id.videoId);
-    return { title, description, channelTitle, publishedAt, urlImg, urlVideo };
+    const urlVideo = YoutubeUtilsAPI.getVideoUrlByVideoId(videoId);
+    return { title, description, channelTitle, publishedAt, urlImg, urlVideo, videoId, views };
 }
 
 function youtubeItem(Component) {

@@ -1,12 +1,11 @@
-import React from 'react'
+import React from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faCalendarAlt, faUsers, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faCalendarAlt, faUsers, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 class CardResult extends React.Component {
     render() {
-        const { title, description, channelTitle, publishedAt, urlImg, urlVideo, views, likes, disLikes } = this.props;
+        const { title, description, channelTitle, urlImg, urlVideo, publishedAt, views, likes, disLikes } = this.props;
 
         return (
             <Card className="card-youtube mb-3 mt-3">
