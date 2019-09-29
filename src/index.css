@@ -16,7 +16,7 @@ code {
   min-height: 100vh;
 }
 
-.card_youtube:hover {
+.card-youtube:hover {
   box-shadow: 0 0 10px #ffffff
 }
 
