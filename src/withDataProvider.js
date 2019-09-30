@@ -6,43 +6,39 @@ function youtubeDataProvider(Component) {
         constructor(props) {
             super(props);
             this.state = { searchResalt: [], query: '', isLoading: false, isNext: false }
-            this.Dataset = new YoutubeAPI('', this.handleLoaded);
+            this.Dataset = new YoutubeAPI();
         }
 
-        getVideoDetails = async (items) => {
-            const videoIds = items.map(item => item.id.videoId).join(',');
-            const videodetails = await this.Dataset.getVideoDetail(videoIds);
-            this.setState((prev) => {
-                const searchResalt = prev.searchResalt;
-                videodetails.items.forEach(element => {
-                    const updatedItem = searchResalt.find(exItem => exItem.id.videoId === element.id)
-                    updatedItem['views'] = element.statistics.viewCount;
+        getVideoDetails = (items) => {
+            this.setState(async prev => {
+                const videoIds = items.map(item => item.id.videoId).join(',');
+                const videodetails = await this.Dataset.getVideoDetail(videoIds);
+                const searchResalt = prev.searchResalt.map((item) => {
+                    const details = videodetails.items.find(det => det.id === item.id.videoId)
+                    return { ...item, views: details.statistics.viewCount };
                 });
-    
-                return { ...prev, searchResalt }
+                return { ...prev, searchResalt };
             });
         }
-    
+
         handleLoaded = async (data, error) => {
             const loadedData = await data;
             this.setState((prev) => {
-                const filteredItems = loadedData.items.filter(i => !this.state.searchResalt.some(exItem => exItem.id.videoId === i.id.videoId));
-                const searchResalt = this.state.isNext ? this.state.searchResalt.concat(filteredItems) : filteredItems;
-                this.getVideoDetails(filteredItems);
-                return { ...prev, isLoading: false, searchResalt, nextPageToken: data.nextPageToken }
+                const filteredItems = loadedData.items.filter(i => !prev.searchResalt.some(exItem => exItem.id.videoId === i.id.videoId));
+                const searchResalt = prev.isNext ? prev.searchResalt.concat(filteredItems) : loadedData.items;
+                return { ...prev, isLoading: false, searchResalt, nextPageToken: loadedData.nextPageToken }
             });
-    
         }
-    
+
         handleQuery = (query) => {
             this.setState({ query });
         }
-    
+
         handleSubmitSearch = (query) => {
             this.setState({ query, isLoading: true, isNext: false });
             this.handleLoaded(this.Dataset.getSearchData(query));
         }
-    
+
         handleScrollEnd = () => {
             if (!this.state.isLoading) {
                 this.setState({ isNext: true, isLoading: true });

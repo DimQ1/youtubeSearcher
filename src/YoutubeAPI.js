@@ -1,9 +1,8 @@
 class youtubeAPI {
-    constructor(key, onLoadData) {
+    constructor(key) {
         this._key = key ? key : 'AIzaSyBMe0YAZiT9xnr2Zl7N-cCT3b15S0OLNkE';
         //this._key = key ? key : "AIzaSyAwYHaDBzo1_I1ZuCnhBxjJN_tL-EjQuZ4";
         //this._key = key ? key : 'AIzaSyCunpeDH93FQRFR33zHRnsfuATLjQSSzks';
-        this.onLoadData = onLoadData;
         this._initSearchUrl();
         this._initVideoDetailUrl();
     }
@@ -15,7 +14,6 @@ class youtubeAPI {
         search_params.append('key', this._key);
         this._videoDetailUrl.search = search_params;
     }
-
 
     _initSearchUrl() {
         const part = 'snippet';
