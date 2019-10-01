@@ -12,22 +12,22 @@ code {
     monospace;
 }
 
-.main-layout{
+.main-layout {
   min-height: 100vh;
 }
 
-.card_hover{
+.card-youtube:hover {
   box-shadow: 0 0 10px #ffffff
 }
 
-.card-youtube__text-title{
+.card-youtube__text-title {
   text-overflow: clip;
   word-wrap: break-word;
   overflow: hidden;
   height: 3.9em;
 }
 
-.card-youtube__text-description{
+.card-youtube__text-description {
   text-overflow: clip;
   word-wrap: break-word;
   overflow: hidden;

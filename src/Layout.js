@@ -1,17 +1,16 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import YoutubeSearchContainer from './YoutubeSearchContaner';
-import youtubeDataProvider from './YoutubeDataProvider';
+import withDataProvider from './withDataProvider';
 
-const YoutubeSearchContainerWithData = youtubeDataProvider(YoutubeSearchContainer)
-
+const YoutubeSearchContainerWithDataProvider = withDataProvider(YoutubeSearchContainer)
 
 class Layout extends React.Component {
     render() {
         return (
             <div className='main-layout bg-dark'>
                 <Container>
-                    <YoutubeSearchContainerWithData />
+                    <YoutubeSearchContainerWithDataProvider />
                 </Container>
             </div>
         );
