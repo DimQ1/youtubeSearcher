@@ -6,14 +6,16 @@ function youtubeDataProvider(Component) {
         constructor(props) {
             super(props);
             this.state = { searchResalt: [], query: '', isLoading: false, isNext: false }
-            this.Dataset = new YoutubeAPI('', this.handleLoaded);
+            this.Dataset = new YoutubeAPI();
         }
 
-        handleLoaded = (data, error) => {
-            const filteredItems = data.items.filter(i => !this.state.searchResalt.some(exItem => exItem.id.videoId === i.id.videoId));
-            const searchResalt = this.state.isNext ? this.state.searchResalt.concat(filteredItems) : data.items;
-
-            this.setState({ isLoading: false, searchResalt, nextPageToken: data.nextPageToken });
+        handleLoaded = async (data) => {
+            const loadedData = await data;
+            this.setState((prev) => {
+                const filteredItems = loadedData.items.filter(i => !this.state.searchResalt.some(exItem => exItem.id.videoId === i.id.videoId));
+                const searchResalt = this.state.isNext ? this.state.searchResalt.concat(filteredItems) : loadedData.items;
+                return { ...prev, isLoading: false, searchResalt, nextPageToken: loadedData.nextPageToken }
+            });
         }
 
         handleQuery = (query) => {
@@ -22,13 +24,13 @@ function youtubeDataProvider(Component) {
 
         handleSubmitSearch = (query) => {
             this.setState({ query, isLoading: true, isNext: false });
-            this.Dataset.getData(this.state.query);
+            this.handleLoaded(this.Dataset.getData(this.state.query));
         }
 
         handleScrollEnd = () => {
             if (!this.state.isLoading) {
                 this.setState({ isNext: true, isLoading: true });
-                this.Dataset.getData(this.state.query, this.state.nextPageToken);
+                this.handleLoaded(this.Dataset.getData(this.state.query, this.state.nextPageToken));
             }
         }
 
