@@ -12,7 +12,7 @@ function CardResult(props) {
         <Card className="card-youtube mb-3 mt-3">
             <Card.Img variant="top" src={urlImg} />
             <Card.Body>
-                <a className="stretched-link" href={urlVideo}> </a>
+                <a className="stretched-link" target="_blank" rel="noopener noreferrer" href={urlVideo}> </a>
                 <Card.Title className='card-youtube__text-title text-center'>{title}</Card.Title>
                 <Card.Text className='card-youtube__text-description text-justify'>
                     {description}
