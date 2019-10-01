@@ -39,6 +39,9 @@ class youtubeAPI {
         if (nextPageToken) {
             search_params.set('pageToken', nextPageToken);
         }
+        else {
+            search_params.delete('pageToken');
+        }
 
         const url = this._SearxhUrl;
         url.search = search_params;
